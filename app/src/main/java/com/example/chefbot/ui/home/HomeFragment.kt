@@ -1,5 +1,6 @@
 package com.example.chefbot.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.example.chefbot.DettagliRicettaActivity
 import com.example.chefbot.MealResponse
 import com.example.chefbot.R
 import com.example.chefbot.RetrofitClient
@@ -70,8 +72,14 @@ class HomeFragment : Fragment() {
 
                         // Gestione del click sul bottone "Vedi Dettagli"
                         detailsButton.setOnClickListener {
-                            Toast.makeText(requireContext(), "Mostra dettagli di ${meal.strMeal}", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(requireContext(), DettagliRicettaActivity::class.java)
+                            intent.putExtra("MEAL_TITLE", meal.strMeal)
+                            intent.putExtra("MEAL_CATEGORY", meal.strCategory)
+                            intent.putExtra("MEAL_INSTRUCTIONS", meal.strInstructions)
+                            intent.putExtra("MEAL_IMAGE", meal.strMealThumb)
+                            startActivity(intent)
                         }
+
                     } else {
                         Toast.makeText(requireContext(), "Nessuna ricetta trovata!", Toast.LENGTH_SHORT).show()
                         mealCard.visibility = View.GONE
