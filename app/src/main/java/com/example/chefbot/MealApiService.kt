@@ -10,4 +10,11 @@ interface MealApiService {
 
     @GET("random.php")
     fun getRandomMeal(): Call<MealResponse>
+
+    @GET("filter.php")
+    fun filterByCategory(@Query("c") category: String): Call<MealResponse>
+
+    @GET("filter.php")
+    fun filterByCountry(@Query("a") country: String): Call<MealResponse>
+
 }

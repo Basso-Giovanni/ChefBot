@@ -27,11 +27,11 @@ object RetrofitClient {
         }
 
         return Meal(
-            idMeal = mealData["idMeal"] as String,
-            strMeal = mealData["strMeal"] as String,
-            strCategory = mealData["strCategory"] as String,
-            strInstructions = mealData["strInstructions"] as String,
-            strMealThumb = mealData["strMealThumb"] as String,
+            idMeal = mealData["idMeal"] as? String ?: "",  // Se null, assegna stringa vuota
+            strMeal = mealData["strMeal"] as? String ?: "Nome non disponibile",
+            strCategory = mealData["strCategory"] as? String ?: "Categoria sconosciuta",
+            strInstructions = mealData["strInstructions"] as? String ?: "Istruzioni non disponibili",
+            strMealThumb = mealData["strMealThumb"] as? String ?: "",  // Se null, assegna stringa vuota
             ingredients = ingredients
         )
     }
