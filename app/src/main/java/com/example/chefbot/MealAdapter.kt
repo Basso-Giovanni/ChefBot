@@ -37,11 +37,13 @@ class MealAdapter(private val context: Context, private val mealList: List<Meal>
         Glide.with(context).load(meal.strMealThumb).into(holder.mealImage)
 
         holder.detailsButton.setOnClickListener {
-            val intent = Intent(context, DettagliRicettaActivity::class.java)
-            intent.putExtra("MEAL_TITLE", meal.strMeal)
-            intent.putExtra("MEAL_CATEGORY", meal.strCategory)
-            intent.putExtra("MEAL_INSTRUCTIONS", meal.strInstructions)
-            intent.putExtra("MEAL_IMAGE", meal.strMealThumb)
+            val intent = Intent(context, DettagliRicettaActivity::class.java).apply {
+                putExtra("MEAL_TITLE", meal.strMeal)
+                putExtra("MEAL_CATEGORY", meal.strCategory)
+                putExtra("MEAL_INSTRUCTIONS", meal.strInstructions)
+                putExtra("MEAL_IMAGE", meal.strMealThumb)
+                putParcelableArrayListExtra("MEAL_INGREDIENTS", ArrayList(meal.ingredients))
+            }
             context.startActivity(intent)
         }
     }

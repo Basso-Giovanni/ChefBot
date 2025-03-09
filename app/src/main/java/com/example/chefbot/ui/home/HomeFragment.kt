@@ -57,7 +57,9 @@ class HomeFragment : Fragment() {
                     val meals = response.body()?.meals
                     if (!meals.isNullOrEmpty()) {
                         mealList.clear()
-                        mealList.addAll(meals)
+                        val convertedMeals = meals.map { RetrofitClient.convertToMeal(it) }
+                        mealList.clear()
+                        mealList.addAll(convertedMeals)
                         mealAdapter.notifyDataSetChanged()
                     } else {
                         Toast.makeText(requireContext(), "Nessuna ricetta trovata!", Toast.LENGTH_SHORT).show()

@@ -13,4 +13,26 @@ object RetrofitClient {
             .build()
             .create(MealApiService::class.java)
     }
+
+    fun convertToMeal(mealData: Map<String, Any?>): Meal {
+        val ingredients = mutableListOf<Ingredient>()
+
+        for (i in 1..20) {
+            val ingredientName = mealData["strIngredient$i"] as? String
+            val measure = mealData["strMeasure$i"] as? String
+
+            if (!ingredientName.isNullOrBlank() && !measure.isNullOrBlank()) {
+                ingredients.add(Ingredient(ingredientName, measure))
+            }
+        }
+
+        return Meal(
+            idMeal = mealData["idMeal"] as String,
+            strMeal = mealData["strMeal"] as String,
+            strCategory = mealData["strCategory"] as String,
+            strInstructions = mealData["strInstructions"] as String,
+            strMealThumb = mealData["strMealThumb"] as String,
+            ingredients = ingredients
+        )
+    }
 }
