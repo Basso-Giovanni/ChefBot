@@ -1,0 +1,12 @@
+
+
+mancano ancora questi punti:
+
+- Finire di implementare l'interfaccia (ricerca, scelta per categoria)
+- Implementare l'interfaccia della ricetta
+- Implemetare il text-to-speech
+- Salvare le ricette preferite
+- Ricette per ingrediente
+- (Pensare a qualcosaltro in più)
+
+in puiù bisogna risolvere ancora il problema delle istruzioni delle ricette delle categorie
