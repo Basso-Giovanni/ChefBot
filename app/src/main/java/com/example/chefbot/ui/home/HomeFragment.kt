@@ -1,15 +1,16 @@
 package com.example.chefbot.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.cardview.widget.CardView
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
-import com.example.chefbot.DettagliRicettaActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.chefbot.Meal
 import com.example.chefbot.MealResponse
 import com.example.chefbot.R
 import com.example.chefbot.RetrofitClient
@@ -21,11 +22,9 @@ class HomeFragment : Fragment() {
 
     private lateinit var searchEditText: EditText
     private lateinit var searchButton: Button
-    private lateinit var mealCard: CardView
-    private lateinit var mealImage: ImageView
-    private lateinit var mealTitle: TextView
-    private lateinit var mealCategory: TextView
-    private lateinit var detailsButton: Button
+    private lateinit var mealRecyclerView: RecyclerView
+    private lateinit var mealAdapter: MealAdapter
+    private var mealList: MutableList<Meal> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,14 +34,11 @@ class HomeFragment : Fragment() {
 
         searchEditText = view.findViewById(R.id.searchEditText)
         searchButton = view.findViewById(R.id.searchButton)
-        mealCard = view.findViewById(R.id.mealCard)
-        mealImage = view.findViewById(R.id.mealImage)
-        mealTitle = view.findViewById(R.id.mealTitle)
-        mealCategory = view.findViewById(R.id.mealCategory)
-        detailsButton = view.findViewById(R.id.detailsButton)
+        mealRecyclerView = view.findViewById(R.id.mealRecyclerView)
 
-        // Nascondiamo la card all'avvio
-        mealCard.visibility = View.GONE
+        mealRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        mealAdapter = MealAdapter(requireContext(), mealList)
+        mealRecyclerView.adapter = mealAdapter
 
         searchButton.setOnClickListener {
             val query = searchEditText.text.toString()
@@ -60,29 +56,11 @@ class HomeFragment : Fragment() {
                 if (response.isSuccessful) {
                     val meals = response.body()?.meals
                     if (!meals.isNullOrEmpty()) {
-                        val meal = meals[0] // Prendiamo il primo risultato
-                        mealTitle.text = meal.strMeal
-                        mealCategory.text = "Categoria: ${meal.strCategory}"
-
-                        // Carichiamo l'immagine con Glide
-                        Glide.with(requireContext()).load(meal.strMealThumb).into(mealImage)
-
-                        // Mostriamo la card con l'animazione
-                        mealCard.visibility = View.VISIBLE
-
-                        // Gestione del click sul bottone "Vedi Dettagli"
-                        detailsButton.setOnClickListener {
-                            val intent = Intent(requireContext(), DettagliRicettaActivity::class.java)
-                            intent.putExtra("MEAL_TITLE", meal.strMeal)
-                            intent.putExtra("MEAL_CATEGORY", meal.strCategory)
-                            intent.putExtra("MEAL_INSTRUCTIONS", meal.strInstructions)
-                            intent.putExtra("MEAL_IMAGE", meal.strMealThumb)
-                            startActivity(intent)
-                        }
-
+                        mealList.clear()
+                        mealList.addAll(meals)
+                        mealAdapter.notifyDataSetChanged()
                     } else {
                         Toast.makeText(requireContext(), "Nessuna ricetta trovata!", Toast.LENGTH_SHORT).show()
-                        mealCard.visibility = View.GONE
                     }
                 }
             }

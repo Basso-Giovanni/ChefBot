@@ -2,76 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Campo di ricerca -->
     <EditText
         android:id="@+id/searchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Cerca una ricetta..."
-        android:padding="8dp"
-        android:textColor="@color/black"
-        android:background="@android:drawable/editbox_background"
-        android:inputType="text" />
+        android:hint="Cerca una ricetta"
+        android:padding="8dp"/>
 
-    <!-- Pulsante di ricerca -->
     <Button
         android:id="@+id/searchButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cerca"
+        android:layout_gravity="center"
         android:layout_marginTop="8dp"/>
 
-    <!-- Box per mostrare la ricetta trovata -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/mealCard"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mealRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="8dp"
-        android:layout_marginTop="16dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <ImageView
-                android:id="@+id/mealImage"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"/>
-
-            <TextView
-                android:id="@+id/mealTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nome Ricetta"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp"/>
-
-            <TextView
-                android:id="@+id/mealCategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Categoria"
-                android:textSize="16sp"
-                android:textColor="#666666"/>
-
-            <Button
-                android:id="@+id/detailsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vedi Dettagli"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
+        android:layout_marginTop="16dp"/>
 </LinearLayout>
